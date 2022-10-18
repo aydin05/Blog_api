@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div>
+    <ul>
+        {% if request.user.is_authenticated %}
+            You are logged in as {{ user }}
+        {% else %}
+            You are not logged in.
+        {% endif %}
+        <li><a href="/">Home</a></li>
+
+
+        {% if request.user.is_authenticated %}
+        <li><a href="accounts/logout">Logout</a></li>
+        {% else %}
+        <li><a href="accounts/register">Register</a></li>
+        <li><a href="accounts/login">Login</a></li>
+        {% endif %}
+    </ul>
+    </div>
+    {% if request.user.is_authenticated %}
+        {% for cat_obj in category_list %}
+            {% for post_obj in cat_obj.posts.all %}
+                    {{ cat_obj }}
+                <br>--------
+                {{ post_obj.title }}<br>
+                -------------------
+                {{ post_obj.content }}
+                <br>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+{% endblock body %}
